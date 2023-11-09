@@ -12,7 +12,35 @@
   }
 
   &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     margin-left: auto;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+
+    span {
+      position: relative;
+      top: -10px;
+      background: #ff5100;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 50%;
+      aspect-ratio: 1/1;
+      display: block;
+      width: 20px;
+      line-height: 20px;
+      text-align: center;
+      padding: 0;
+
+      &:empty {
+        display: none;
+      }
+    }
   }
 
   a {

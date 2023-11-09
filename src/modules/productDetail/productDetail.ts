@@ -1,3 +1,4 @@
+import { favoritesService } from '../../services/favorites.service';
 import { Component } from '../component';
 import { ProductList } from '../productList/productList';
 import { formatPrice } from '../../utils/helpers';
@@ -5,9 +6,14 @@ import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 
+
+
+
+
 class ProductDetail extends Component {
   more: ProductList;
   product?: ProductData;
+  buttonFavorites = document.querySelector('.favorites');
 
   constructor(props: any) {
     super(props);
@@ -17,6 +23,7 @@ class ProductDetail extends Component {
   }
 
   async render() {
+
     const urlParams = new URLSearchParams(window.location.search);
     const productId = Number(urlParams.get('id'));
 
@@ -32,8 +39,15 @@ class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
+    this.view.btnFavorite.onclick = this._addToFavorites.bind(this);
+    this.view.btnFavorite.addEventListener('click', () => {
+      this.buttonFavorites?.classList.remove('hide');
+    })
+
 
     const isInCart = await cartService.isInCart(this.product);
+    const isInFavorites = await favoritesService.isInFavourites(this.product);
+    if (isInFavorites) this._setInFavorites();
 
     if (isInCart) this._setInCart();
 
@@ -49,7 +63,17 @@ class ProductDetail extends Component {
         this.more.update(products);
       });
   }
+  private _addToFavorites() {
+    if (!this.product) return;
 
+    favoritesService.addToFavorites(this.product);
+    this._setInFavorites();
+  }
+  private async _setInFavorites() {
+    if (!this.product) return;
+    this.view.btnFavorite.innerText = 'В избранном';
+    this.view.btnFavorite.disabled = true;
+  }
   private _addToCart() {
     if (!this.product) return;
 
@@ -60,7 +84,13 @@ class ProductDetail extends Component {
   private _setInCart() {
     this.view.btnBuy.innerText = '✓ В корзине';
     this.view.btnBuy.disabled = true;
+
   }
 }
 
+
 export const productDetailComp = new ProductDetail(html);
+
+
+
+

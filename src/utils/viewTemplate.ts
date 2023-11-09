@@ -43,3 +43,5 @@ export class ViewTemplate {
     return ViewTemplate.getView(element, dataModel || {});
   }
 }
+
+

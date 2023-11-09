@@ -39,3 +39,5 @@ class Checkout extends Component {
 }
 
 export const checkoutComp = new Checkout(html);
+
+
