@@ -4,7 +4,10 @@ import { ProductData } from 'types';
 const DB = '__wb-favorites';
 
 class FavoritesService {
-
+    async init() {
+        this._updCounters();
+        this.toggleButton();
+    }
     async addToFavorites(product: ProductData) {
         const favorites = await this.getFavorites();
         await this.setFavorites([...favorites, product]);
@@ -17,6 +20,7 @@ class FavoritesService {
 
     async clear() {
         await localforage.removeItem(DB);
+        this._updCounters();
     }
 
     async getFavorites(): Promise<ProductData[]> {
@@ -25,7 +29,7 @@ class FavoritesService {
 
     async setFavorites(data: ProductData[]) {
         await localforage.setItem(DB, data);
-
+        this._updCounters();
     }
 
     async isInFavourites(product: ProductData) {
@@ -44,6 +48,13 @@ class FavoritesService {
             btn.classList.add('hide');
         }
 
+    }
+    private async _updCounters() {
+        const products = await this.getFavorites();
+        const count = products.length >= 10 ? '9+' : products.length;
+
+        //@ts-ignore
+        document.querySelectorAll('.js__favorite-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
     }
 }
 export const favoritesService = new FavoritesService();

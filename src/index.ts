@@ -7,8 +7,9 @@ import { userService } from "./services/user.service";
 
 new Router();
 cartService.init();
+favoritesService.init();
 userService.init();
-favoritesService.toggleButton();
+
 
 setTimeout(() => {
   document.body.classList.add("is__ready");

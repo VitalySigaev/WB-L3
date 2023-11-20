@@ -7,14 +7,10 @@ import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 
 
-
-
-
 class ProductDetail extends Component {
   more: ProductList;
   product?: ProductData;
-  buttonFavorites = document.querySelector('.favorites');
-
+  button = document.querySelector('.favorites');
   constructor(props: any) {
     super(props);
 
@@ -40,9 +36,11 @@ class ProductDetail extends Component {
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
     this.view.btnFavorite.onclick = this._addToFavorites.bind(this);
-    this.view.btnFavorite.addEventListener('click', () => {
-      this.buttonFavorites?.classList.remove('hide');
-    })
+    const showButtonFavorite = () => {
+      this.button?.classList.remove('hide');
+      removeEventListener('click', showButtonFavorite);
+    }
+    this.view.btnFavorite.addEventListener('click', showButtonFavorite)
 
 
     const isInCart = await cartService.isInCart(this.product);

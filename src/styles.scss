@@ -145,7 +145,13 @@ img {
     display: none;
   }
 }
-
+.favorites{
+  position: relative;
+}
+.js__favorite-counter{
+  top: -10px;
+  right: -5px;
+}
 .hide {
   display: none !important;
 }

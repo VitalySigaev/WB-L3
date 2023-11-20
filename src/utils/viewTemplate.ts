@@ -15,6 +15,7 @@ export class ViewTemplate {
       });
     }
   }
+  
 
   static getView(element: HTMLElement, dataModel?: any) {
     if (dataModel) {
@@ -24,6 +25,7 @@ export class ViewTemplate {
     (element.querySelectorAll('[data-tag]') as NodeListOf<HTMLElement>).forEach((el) => {
       if (el.dataset.tag) view[el.dataset.tag] = el;
     });
+    
     view.root = element;
     view.querySelector = element.querySelector.bind(element);
     view.querySelectorAll = element.querySelectorAll.bind(element);
@@ -41,6 +43,22 @@ export class ViewTemplate {
   cloneView(dataModel?: any) {
     const element = (this._template.content.cloneNode(true) as HTMLElement).firstElementChild as HTMLElement;
     return ViewTemplate.getView(element, dataModel || {});
+  }
+  // Метод для отслеживания видимости карточки во вьюпорте и вывода в консоль
+  observeVisibility() {
+    const cardElement = this.root;
+
+    const observer = new IntersectionObserver(entries => {
+      // Если карточка видна во вьюпорте
+      if (entries[0].isIntersecting) {
+        console.log('Карточка видна во вьюпорте!');
+        // После вывода в консоль, наблюдение больше не нужно
+        observer.disconnect();
+      }
+    });
+
+    // Начинаем наблюдение за карточкой
+    observer.observe(cardElement);
   }
 }
 
