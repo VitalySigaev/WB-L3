@@ -45,6 +45,7 @@ class ProductDetail extends Component {
 
     const isInCart = await cartService.isInCart(this.product);
     const isInFavorites = await favoritesService.isInFavourites(this.product);
+    
     if (isInFavorites) this._setInFavorites();
 
     if (isInCart) this._setInCart();

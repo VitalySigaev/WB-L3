@@ -35,20 +35,21 @@ class FavoritesService {
     async isInFavourites(product: ProductData) {
         const favorites = await this.getFavorites();
         return favorites.some(({ id }) => id === product.id);
-
     }
 
     async toggleButton() {
         const products = await this.getFavorites();
         const btn = document.querySelector('.favorites');
-        if (products.length) {
-            btn.classList.remove('hide');
-        }
-        else {
-            btn.classList.add('hide');
-        }
 
+        if (btn) {
+            if (products.length) {
+                btn.classList.remove('hide');
+            } else {
+                btn.classList.add('hide');
+            }
+        }
     }
+
     private async _updCounters() {
         const products = await this.getFavorites();
         const count = products.length >= 10 ? '9+' : products.length;
