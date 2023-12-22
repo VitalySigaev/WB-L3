@@ -32,4 +32,4 @@ class Checkout extends Component {
     }
 }
 
-export const favoritesCheckoutComp = new Checkout(html); 
+export const favoritesComp = new Checkout(html); 

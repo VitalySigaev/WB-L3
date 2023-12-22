@@ -3,7 +3,7 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
-import { favoritesCheckoutComp } from './modules/favorites/favorites';
+import { favoritesComp } from './modules/favorites/favorites';
 
 
 const ROUTES = {
@@ -11,7 +11,7 @@ const ROUTES = {
   '/catalog': catalogComp,
   '/product': productDetailComp,
   '/checkout': checkoutComp,
-  '/favorites': favoritesCheckoutComp,
+  '/favorites': favoritesComp,
 };
 
 export default class Router {
