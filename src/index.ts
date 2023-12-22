@@ -6,9 +6,13 @@ import { userService } from "./services/user.service";
 
 
 (async () => {
-  await userService.init();
-  await cartService.init();
-  new Router();
+  try {
+    await userService.init();
+    await cartService.init();
+    new Router();
+  } catch (error) {
+    console.error('Произошла ошибка:', error);
+  }
 })();
 
 
