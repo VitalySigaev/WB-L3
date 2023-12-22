@@ -25,12 +25,13 @@ export default class Router {
 
   route(e: any) {
     e.preventDefault();
-    let path = window.location.href;
-    sendEvent('route', { url: path });
+
     // @ts-ignore
     const component = ROUTES[window.location.pathname] || notFoundComp;
 
     component.attach(this.$appRoot);
     component.render();
+    let path = window.location.href;
+    sendEvent('route', { url: path });
   }
 }

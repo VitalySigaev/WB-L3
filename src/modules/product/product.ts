@@ -22,7 +22,8 @@ export class Product {
     this.observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          (this.product.log !== '') ? sendEvent('viewCard', { ...this.product }) : sendEvent('viewCardPromo', { ...this.product });
+          (Object.keys(this.product.log).length === 0) ? sendEvent('viewCard',  this.product ) : 
+          sendEvent('viewCardPromo', this.product );
           console.log('Товар виден во вьюпорте');
 
           this.observer.disconnect();
@@ -38,6 +39,8 @@ export class Product {
   }
 
   render() {
+
+    
     const { id, name, src, salePriceU } = this.product;
 
     this.view.root.setAttribute('href', `/product?id=${id}`);

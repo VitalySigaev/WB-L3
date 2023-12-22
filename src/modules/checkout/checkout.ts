@@ -10,7 +10,7 @@ import { genUUID } from '../../utils/helpers';
 
 class Checkout extends Component {
   products!: ProductData[];
-
+  totalPrice: number=0;
   async render() {
     this.products = await cartService.get();
 
@@ -25,8 +25,8 @@ class Checkout extends Component {
       productComp.attach(this.view.cart);
     });
 
-    const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
-    this.view.price.innerText = formatPrice(totalPrice);
+    this.totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
+    this.view.price.innerText = formatPrice(this.totalPrice);
 
     this.view.btnOrder.onclick = this._makeOrder.bind(this);
   }
@@ -37,10 +37,10 @@ class Checkout extends Component {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
-    await sendEvent('purchase', {
-      orderId: genUUID(), 
-      totalPrice: parseInt(this.view.price.innerText), 
-      productIds: this.products.map(el=>el.id)
+    sendEvent('purchase', {
+      orderId: genUUID(),
+      totalPrice: Math.round(this.totalPrice/1000),
+      productIds: this.products.map(el => el.id)
     });
     // window.location.href = '/?isSuccessOrder';
   }

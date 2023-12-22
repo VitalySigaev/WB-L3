@@ -53,7 +53,6 @@ class ProductDetail extends Component {
 
   private _addToCart() {
     if (!this.product) return;
-    console.log(this.product);
 
     sendEvent('addToCart', { ...this.product });
     cartService.addProduct(this.product);
