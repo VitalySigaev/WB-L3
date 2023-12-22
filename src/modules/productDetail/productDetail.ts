@@ -27,7 +27,6 @@ class ProductDetail extends Component {
     this.product = await productResp.json();
 
     if (!this.product) return;
-
     const { id, src, name, description, salePriceU } = this.product;
 
     this.view.photo.setAttribute('src', src);
@@ -40,12 +39,12 @@ class ProductDetail extends Component {
       this.button?.classList.remove('hide');
       removeEventListener('click', showButtonFavorite);
     }
-    this.view.btnFavorite.addEventListener('click', showButtonFavorite)
+    this.view.btnFavorite.addEventListener('click', showButtonFavorite);
 
 
     const isInCart = await cartService.isInCart(this.product);
     const isInFavorites = await favoritesService.isInFavourites(this.product);
-    
+
     if (isInFavorites) this._setInFavorites();
 
     if (isInCart) this._setInCart();
@@ -68,6 +67,8 @@ class ProductDetail extends Component {
     favoritesService.addToFavorites(this.product);
     this._setInFavorites();
   }
+
+
   private async _setInFavorites() {
     if (!this.product) return;
     this.view.btnFavorite.innerText = 'В избранном';

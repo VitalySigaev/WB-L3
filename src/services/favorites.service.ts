@@ -13,11 +13,6 @@ class FavoritesService {
         await this.setFavorites([...favorites, product]);
     }
 
-    async removeFromFavorites(product: ProductData) {
-        const favorites = await this.getFavorites();
-        await this.setFavorites(favorites.filter(({ id }) => id !== product.id));
-    }
-
     async clear() {
         await localforage.removeItem(DB);
         this._updCounters();
@@ -42,11 +37,7 @@ class FavoritesService {
         const btn = document.querySelector('.favorites');
 
         if (btn) {
-            if (products.length) {
-                btn.classList.remove('hide');
-            } else {
-                btn.classList.add('hide');
-            }
+            (products.length) ? btn.classList.remove('hide') : btn.classList.add('hide');
         }
     }
 
